@@ -1,25 +1,25 @@
 version: '3.7'
 services:
   nest-api:
-    container_name: nest-api
+    container_name: gos-api
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 3030:3000
     depends_on:
-      - mysql
+      - db
     env_file:
       - .env
 
-  mysql:
+  db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: gosbe@11
     volumes:
-      - /var/lib/mysql
+      - mysql:/var/lib/mysql
     ports:
       - 3306:3306
 
@@ -29,3 +29,6 @@ services:
     ports:
       - 8080:8080
 
+volumes:
+  mysql:
+    name: gos-db

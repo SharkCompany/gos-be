@@ -24,8 +24,7 @@ jobs:
         script: | 
           cd ~/gos-be
           sudo git pull origin main
-          sudo docker container stop gos_be
-          sudo docker container rm -f gos_be
-          sudo docker image rm -f gos_be
-          sudo docker build -t gos_be .
-          sudo docker run -dp 5001:3000 --name gos_be gos_be
+
+
+# sudo docker-compose -f docker-compose.yml up -d --build
+# sudo docker-compose -f docker-compose.yml down
