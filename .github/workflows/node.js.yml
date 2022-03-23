@@ -24,7 +24,7 @@ jobs:
         script: | 
           cd ~/gos-be
           sudo docker-compose -f docker-compose.yml down
-          git pull origin main
+          sudo git pull origin main
           sudo docker-compose -f docker-compose.yml up -d --build --remove-orphans 
 
 
