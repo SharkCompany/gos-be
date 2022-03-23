@@ -20,6 +20,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME_GOS }}      
         password: ${{ secrets.SSH_PWD_GOS }}
         port: 22
+        script_stop: true
         script: | 
           cd ~/gos-be
           sudo git pull origin main
