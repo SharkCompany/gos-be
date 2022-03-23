@@ -23,8 +23,8 @@ jobs:
         script_stop: true
         script: | 
           cd ~/gos-be
-          sudo git pull origin main
+          sudo docker-compose -f docker-compose.yml up -d --build
+          git pull origin main
+          sudo docker-compose -f docker-compose.yml down
 
 
-# sudo docker-compose -f docker-compose.yml up -d --build
-# sudo docker-compose -f docker-compose.yml down
