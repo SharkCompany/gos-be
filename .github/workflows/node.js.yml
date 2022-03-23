@@ -13,13 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-#     - name: Create env file
-#       run: |
-#         touch .env
-#         echo REACT_APP_BASE_URL=${{secrets.API_ENDPOINT}} >> .env
-#         echo REACT_APP_MEDIA_URL=${{ secrets.MEDIA_ENDPOINT }} >> .env
-#         cat .env
-        
     - name: Deploy appication
       uses:  appleboy/ssh-action@master
       with:
@@ -28,7 +21,7 @@ jobs:
         password: ${{ secrets.SSH_PWD_GOS }}
         port: 22
         script: | 
-          cd ~/gos-be 
+          cd ~/gos-be
           sudo git pull origin main
           sudo docker container stop gos_be
           sudo docker container rm -f gos_be

@@ -12,7 +12,7 @@ export class UserService {
     return this.prisma.user.create({
       data: {
         name: "khuong duy",
-        email: "duy@gmail.com",
+        email: "duy1@gmail.com",
       },
     });
   }
