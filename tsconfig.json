@@ -1,0 +1,42 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"declaration": false,
+		"noImplicitAny": false,
+		"noUnusedLocals": false,
+		"removeComments": true,
+		"noLib": false,
+		"skipLibCheck": true,
+		"baseUrl": "./",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"useUnknownInCatchVariables": false,
+		"target": "es6",
+		"sourceMap": true,
+		"allowJs": true,
+		"outDir": "dist",
+		"lib": ["es7"],
+		"typeRoots": ["node_modules/@types", "types"],
+		"paths": {
+			"@auth/*": ["src/auth/*"],
+			"@common/*": ["src/common/*"],
+			"@config/*": ["src/config/*"],
+			"@environments/*": ["src/environments/*"],
+			"@generator/*": ["src/generator/graphql.schema/*"],
+			"@entities/*": ["src/entities/*"],
+			"@shared/*": ["src/shared/*"],
+			"@utils/*": ["src/utils/*"],
+			"@validations/*": ["src/validations/*"]
+		}
+	},
+	"include": ["src/**/*.ts", "src/services/reviews/index.js", "test"],
+	"compileOnSave": false,
+	"exclude": [
+		"node_modules",
+		"coverage",
+		"document",
+		"dist",
+		"backup",
+		"**/*.spec.ts"
+	]
+}

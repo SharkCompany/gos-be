@@ -1,0 +1,37 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+#     - name: Create env file
+#       run: |
+#         touch .env
+#         echo REACT_APP_BASE_URL=${{secrets.API_ENDPOINT}} >> .env
+#         echo REACT_APP_MEDIA_URL=${{ secrets.MEDIA_ENDPOINT }} >> .env
+#         cat .env
+        
+    - name: Deploy appication
+      uses:  appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST_GOS  }}        
+        username: ${{ secrets.SSH_USERNAME_GOS }}      
+        password: ${{ secrets.SSH_PWD_GOS }}
+        port: 22
+        script: | 
+          cd ~/gos-be 
+          sudo git pull origin main
+          sudo docker container stop gos_be
+          sudo docker container rm -f gos_be
+          sudo docker image rm -f gos_be
+          sudo docker build -t gos_be .
+          sudo docker run -dp 5001:3000 --name gos_be gos_be
