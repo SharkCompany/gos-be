@@ -6,7 +6,7 @@ COPY . .
 RUN npx prisma generate
 RUN yarn build
 
-FROM node:16-alphine
+FROM node:16-alpine
 WORKDIR /app
 COPY --from=builder /app ./
 CMD [ "yarn", "start:prod" ]
