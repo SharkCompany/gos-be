@@ -5,25 +5,31 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { UserModule } from "./user/user.module";
 // import { DriveModule } from './drive/drive.module';
-import GqlConfigService from "./config/graphql";
+// import GqlConfigService from "./config/graphql";
 import { ConfigModule } from "@nestjs/config";
-import { DriveModule } from "./drive/drive.module";
-import { DriveDetailModule } from "./drive-detail/drive-detail.module";
+
 import config from "./config/common/config";
 import { PrismaService } from "@config/prisma/prisma.service";
+import { AuthModule } from "./auth/auth.module";
+import { APP_GUARD } from "@nestjs/core";
+import { JwtAuthGuard } from "@auth/jwt/jwt-auth.guard";
+import { PassportModule } from "@nestjs/passport";
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
-    GraphQLModule.forRootAsync<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      useClass: GqlConfigService,
-    }),
+    PassportModule,
     UserModule,
-    DriveModule,
-    DriveDetailModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [
+    AppService,
+    PrismaService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}

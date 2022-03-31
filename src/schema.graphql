@@ -2,93 +2,28 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateDriveDetailInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input CreateDriveInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 input CreateUserInput {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-type Drive {
-  createdAt: DateTime!
-  destination: String!
-
-  """driver unique id"""
-  driver: ID!
-  id: ID!
-  start: DateTime!
-  status: String!
-  updatedAt: DateTime!
-}
-
-type DriveDetail {
-  cancelReason: String!
-  createdAt: DateTime!
-  drive: ID!
-  driver: ID!
-  end: DateTime!
-  id: ID!
-  passenger: ID!
-  price: Int!
-  rate: Float!
-  start: DateTime!
-  status: DriveStaus!
-  updatedAt: DateTime!
-}
-
-"""Posible status or drives when created by user"""
-enum DriveStaus {
-  canceled
-  complete
-  fail
-  on_road
-  preparing
-  waiting
+type Google {
+  email: String
+  id: String
+  name: String
+  token: String
 }
 
 type Mutation {
-  createDrive(createDriveInput: CreateDriveInput!): Drive!
-  createDriveDetail(createDriveDetailInput: CreateDriveDetailInput!): DriveDetail!
   createUser(createUserInput: CreateUserInput!): User!
-  removeDrive(id: Int!): Drive!
-  removeDriveDetail(id: Int!): DriveDetail!
   removeUser(id: Int!): User!
-  updateDrive(updateDriveInput: UpdateDriveInput!): Drive!
-  updateDriveDetail(updateDriveDetailInput: UpdateDriveDetailInput!): DriveDetail!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
   allUser: [User!]!
-  drive(id: Int!): Drive!
-  driveDetail(id: Int!): DriveDetail!
-  totalday: Float!
+  totalday: String!
   user(id: Int!): User!
-}
-
-input UpdateDriveDetailInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input UpdateDriveInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }
 
 input UpdateUserInput {
@@ -102,6 +37,7 @@ type User {
 
   """nam|nu"""
   gender: String!
+  google: Google
   id: String!
   name: String!
   phone: String!

@@ -1,5 +1,6 @@
-import * as dotenv from "dotenv";
-dotenv.config();
+import { config } from "dotenv";
+
+config();
 
 // environment
 const NODE_ENV: string = process.env.NODE_ENV || "development";
@@ -67,6 +68,9 @@ const STRIPE_PUBLIC_KEY: string = process.env.STRIPE_PUBLIC_KEY || "xxx";
 const STRIPE_SECRET_KEY: string = process.env.STRIPE_SECRET_KEY || "xxx";
 const STRIPE_PLAN: string = process.env.STRIPE_PLAN || "xxx";
 
+// jwt
+const JWT_SECRET: string = process.env.JWT_SECRET || "duydeptrai";
+
 export {
   NODE_ENV,
   AUTHOR,
@@ -103,4 +107,5 @@ export {
   STRIPE_PUBLIC_KEY,
   STRIPE_SECRET_KEY,
   STRIPE_PLAN,
+  JWT_SECRET,
 };
