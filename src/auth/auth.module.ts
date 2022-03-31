@@ -1,5 +1,5 @@
 import { PrismaService } from "@config/prisma/prisma.service";
-import { JWT_SECRET } from "@environments/index";
+import { JWT_SECRET } from "@environments";
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { AuthController } from "./auth.controller";

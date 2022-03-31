@@ -1,11 +1,7 @@
 import { Module } from "@nestjs/common";
-import { GraphQLModule } from "@nestjs/graphql";
-import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { UserModule } from "./user/user.module";
-// import { DriveModule } from './drive/drive.module';
-// import GqlConfigService from "./config/graphql";
 import { ConfigModule } from "@nestjs/config";
 
 import config from "./config/common/config";
