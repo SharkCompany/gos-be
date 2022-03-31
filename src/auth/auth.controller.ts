@@ -1,4 +1,3 @@
-import { Public } from "@common/decorator/public";
 import { PrismaService } from "@config/prisma/prisma.service";
 import {
   ConflictException,
@@ -7,11 +6,11 @@ import {
   UnauthorizedException,
   UseGuards,
 } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
 import { User } from "@prisma/client";
 import { AuthService } from "./auth.service";
-import { CurrentUser } from "../common/decorator/user.decorator";
+
 import { FirebaseAuthGuard } from "./firebase/firebase-auth.guard";
+import { CurrentUser, Public } from "@decorator";
 
 @Controller()
 export class AuthController {

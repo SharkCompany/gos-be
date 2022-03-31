@@ -1,4 +1,4 @@
-import { CurrentUser } from "@common/decorator/user.decorator";
+import { CurrentUser } from "@decorator";
 import { PrismaService } from "@config/prisma/prisma.service";
 import { Controller, Get } from "@nestjs/common";
 import { PrismaClient, User } from "@prisma/client";

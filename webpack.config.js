@@ -30,6 +30,7 @@ module.exports = {
       "@auth": path.resolve(__dirname, "./src/auth"),
       "@common": path.resolve(__dirname, "./src/common"),
       "@dto": path.resolve(__dirname, "./src/dto"),
+      "@decorator": path.resolve(__dirname, "./src/decorator"),
       "@config": path.resolve(__dirname, "./src/config"),
       "@environments": path.resolve(__dirname, "./src/environments"),
       "@models": path.resolve(__dirname, "./src/models"),

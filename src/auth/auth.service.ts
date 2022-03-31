@@ -1,5 +1,5 @@
 import { LoginResponse } from "@dto/login-response";
-import { JWT_SECRET } from "@environments/index";
+import { JWT_SECRET } from "@environments";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "@prisma/client";
@@ -43,3 +43,4 @@ export class AuthService {
     const refreshToken = await this.generateToken(user, "refreshToken");
     return { accessToken, refreshToken };
   }
+}
