@@ -13,6 +13,7 @@ import { PassportModule } from "@nestjs/passport";
 import { UserModule } from "@modules/user/user.module";
 import { AuthModule } from "@modules/auth/auth.module";
 import { JwtAuthGuard } from "@modules/auth/jwt/jwt-auth.guard";
+import { DriveModule } from "@modules/drive/drive.module";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { JwtAuthGuard } from "@modules/auth/jwt/jwt-auth.guard";
     PassportModule,
     UserModule,
     AuthModule,
+    DriveModule,
   ],
   controllers: [AppController],
   providers: [
