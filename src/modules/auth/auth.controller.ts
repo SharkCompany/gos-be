@@ -2,6 +2,8 @@ import { PrismaService } from "@config/prisma/prisma.service";
 import {
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   UnauthorizedException,
   UseGuards,
 } from "@nestjs/common";
@@ -10,7 +12,14 @@ import { AuthService } from "./auth.service";
 
 import { FirebaseAuthGuard } from "./firebase/firebase-auth.guard";
 import { CurrentUser, Public } from "@decorator";
-import { ApiTags } from "@nestjs/swagger";
+import {
+  ApiBearerAuth,
+  ApiHeader,
+  ApiOkResponse,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
+import { LoginResponse } from "@dto/login-response";
 
 @ApiTags("auth")
 @Controller()
@@ -20,6 +29,12 @@ export class AuthController {
     private readonly prisma: PrismaService,
   ) {}
 
+  @ApiOkResponse({
+    status: HttpStatus.OK,
+    type: LoginResponse,
+    description: "Login success",
+  })
+  @ApiBearerAuth()
   @Public()
   @UseGuards(FirebaseAuthGuard)
   @Get("login")
@@ -40,6 +55,12 @@ export class AuthController {
     return { tokens: await this.auth.tradeToken(user), info: user };
   }
 
+  @ApiOkResponse({
+    status: HttpStatus.OK,
+    type: LoginResponse,
+    description: "Login success",
+  })
+  @ApiBearerAuth()
   @Get("login-refresh")
   async refreshToken(@CurrentUser() user: User) {
     return await this.auth.tradeToken(user);
