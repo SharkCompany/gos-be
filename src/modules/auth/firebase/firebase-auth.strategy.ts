@@ -36,7 +36,6 @@ export class FirebaseAuthStrategy extends PassportStrategy(
     try {
       this.defaultApp = firebase.initializeApp({
         credential: firebase.credential.cert(firebase_params),
-        // databaseURL: '',
       });
     } catch (error) {
       this.defaultApp = firebase.app();

@@ -14,7 +14,6 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
   }
   canActivate(context: ExecutionContext) {
     // exclude routes from guard with resolver decorated with @Public
-
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),

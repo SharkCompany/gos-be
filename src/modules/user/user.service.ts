@@ -1,8 +1,6 @@
 import { PrismaService } from "@config/prisma/prisma.service";
 import { Injectable } from "@nestjs/common";
-
-import { User } from "@prisma/client";
-import { resolve } from "path";
+import { UpdateUserInfoDto } from "./dto/updateUserInfoDto";
 
 @Injectable()
 export class UserService {
@@ -18,5 +16,22 @@ export class UserService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  findMe(email: string) {
+    return this.prisma.user.findFirst({
+      where: { email: email },
+    });
+  }
+
+  updateInfo(id: number, inf: UpdateUserInfoDto) {
+    return this.prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        ...inf,
+      },
+    });
   }
 }

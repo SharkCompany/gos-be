@@ -19,7 +19,7 @@
 		"resolveJsonModule":true,
 		"typeRoots": ["node_modules/@types", "types"],
 		"paths": {
-			"@auth/*": ["src/auth/*"],
+			"@modules/*": ["src/modules/*"],
 			"@dto/*": ["src/dto/*"],
 			"@common/*": ["src/common/*"],
 			"@decorator": ["src/decorator"],

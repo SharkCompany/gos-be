@@ -28,6 +28,7 @@
     "@nestjs/jwt": "^8.0.0",
     "@nestjs/passport": "^8.2.1",
     "@nestjs/platform-express": "^8.4.3",
+    "@nestjs/swagger": "^5.2.1",
     "@prisma/client": "^3.11.0",
     "chalk": "4.1.0",
     "class-transformer": "^0.5.1",
@@ -42,6 +43,7 @@
     "rimraf": "^3.0.2",
     "run-script-webpack-plugin": "^0.0.11",
     "rxjs": "^7.4.0",
+    "swagger-ui-express": "^4.3.0",
     "webpack": "^5.70.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-node-externals": "^3.0.0"

@@ -27,7 +27,7 @@ module.exports = {
   mode: "development",
   resolve: {
     alias: {
-      "@auth": path.resolve(__dirname, "./src/auth"),
+      "@modules": path.resolve(__dirname, "./src/modules"),
       "@common": path.resolve(__dirname, "./src/common"),
       "@dto": path.resolve(__dirname, "./src/dto"),
       "@decorator": path.resolve(__dirname, "./src/decorator"),

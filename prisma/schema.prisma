@@ -8,22 +8,49 @@ datasource db {
 }
 
 model User {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  name          String
+  phone         String?
+  licensePlates String?  @unique
+  bio           String?
+  picture        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  driver        Drive[]  @relation("driver")
+  passenger     Drive[]  @relation("passenger")
+}
+
+model Drive {
+  id           Int            @id @default(autoincrement())
+  destination  String
+  price        String?
+  status       DriveStatus
+  timeStart    DateTime
+  passengerId  Int?
+  driverId     Int
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  driver       User?          @relation("driver", fields: [driverId], references: [id])
+  passenger    User?          @relation("passenger", fields: [passengerId], references: [id])
+  driveHistory DriveHistory[]
+}
+
+model DriveHistory {
   id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
+  driveId   Int
+  drive     Drive    @relation(fields: [driveId], references: [id])
+  timeEnd   DateTime
+  timeStart DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean? @default(false)
-  authorId  Int?
-  // author    User?    @relation(fields: [authorId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([authorId], map: "Post_authorId_fkey")
+enum DriveStatus {
+  waiting
+  preparing
+  onroad
+  completed
+  failed
+  canceled
 }

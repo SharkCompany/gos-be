@@ -1,6 +1,5 @@
 import { PrismaService } from "@config/prisma/prisma.service";
 import {
-  ConflictException,
   Controller,
   Get,
   UnauthorizedException,
@@ -11,7 +10,9 @@ import { AuthService } from "./auth.service";
 
 import { FirebaseAuthGuard } from "./firebase/firebase-auth.guard";
 import { CurrentUser, Public } from "@decorator";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags("auth")
 @Controller()
 export class AuthController {
   constructor(
@@ -21,41 +22,26 @@ export class AuthController {
 
   @Public()
   @UseGuards(FirebaseAuthGuard)
-  @Get(["login"])
-  async loginUser(@CurrentUser() currentUser: User) {
+  @Get("login")
+  async loginUser(@CurrentUser() curr) {
+    const { email, picture, name } = curr;
+
     const user = await this.prisma.user.findUnique({
       where: {
-        email: currentUser.email,
+        email: email,
       },
     });
 
     if (!user) {
-      throw new UnauthorizedException();
+      const newUser = await this.auth.registerUser({ name, email, picture });
+      const tokens = await this.auth.tradeToken(newUser);
+      return { tokens, info: newUser };
     }
-    return this.auth.tradeToken(user);
+    return { tokens: await this.auth.tradeToken(user), info: user };
   }
 
   @Get("login-refresh")
   async refreshToken(@CurrentUser() user: User) {
     return await this.auth.tradeToken(user);
-  }
-
-  @Public()
-  @UseGuards(FirebaseAuthGuard)
-  @Get("register")
-  async register(@CurrentUser() curr: User) {
-    let newUser;
-    try {
-      newUser = await this.prisma.user.create({
-        data: {
-          email: curr.email,
-          name: curr.name,
-        },
-      });
-    } catch (error) {
-      throw new ConflictException("User already exist");
-    }
-    const tokens = await this.auth.tradeToken(newUser);
-    return { tokens, info: newUser };
   }
 }
