@@ -1,24 +1,11 @@
 import { PrismaService } from "@config/prisma/prisma.service";
-import {
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  UnauthorizedException,
-  UseGuards,
-} from "@nestjs/common";
+import { Controller, Get, HttpStatus, UseGuards } from "@nestjs/common";
 import { User } from "@prisma/client";
 import { AuthService } from "./auth.service";
 
 import { FirebaseAuthGuard } from "./firebase/firebase-auth.guard";
 import { CurrentUser, Public } from "@decorator";
-import {
-  ApiBearerAuth,
-  ApiHeader,
-  ApiOkResponse,
-  ApiResponse,
-  ApiTags,
-} from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { LoginResponse } from "@dto/login-response";
 
 @ApiTags("auth")

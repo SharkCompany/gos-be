@@ -18,9 +18,9 @@ export class UserService {
     return `This action removes a #${id} user`;
   }
 
-  findMe(email: string) {
+  findMe(id: number) {
     return this.prisma.user.findFirst({
-      where: { email: email },
+      where: { id: id },
     });
   }
 

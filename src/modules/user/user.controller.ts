@@ -11,7 +11,7 @@ export class UserController {
   @ApiBearerAuth()
   @Get("me")
   async me(@CurrentUser() user) {
-    return this.userService.findMe(user.email);
+    return await this.userService.findMe(user.id);
   }
 
   @Public()
