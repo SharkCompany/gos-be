@@ -14,7 +14,7 @@ model User {
   phone         String?
   licensePlates String?  @unique
   bio           String?
-  picture        String?
+  picture       String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   driver        Drive[]  @relation("driver")
@@ -25,7 +25,7 @@ model Drive {
   id           Int            @id @default(autoincrement())
   destination  String
   price        String?
-  status       DriveStatus
+  available    Boolean        @default(true)
   timeStart    DateTime
   passengerId  Int?
   driverId     Int
@@ -37,13 +37,14 @@ model Drive {
 }
 
 model DriveHistory {
-  id        Int      @id @default(autoincrement())
+  id        Int         @id @default(autoincrement())
   driveId   Int
-  drive     Drive    @relation(fields: [driveId], references: [id])
-  timeEnd   DateTime
-  timeStart DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  drive     Drive       @relation(fields: [driveId], references: [id])
+  status    DriveStatus
+  timeEnd   DateTime?
+  timeStart DateTime?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 enum DriveStatus {
@@ -54,3 +55,4 @@ enum DriveStatus {
   failed
   canceled
 }
+

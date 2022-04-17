@@ -14,6 +14,7 @@ import { UserModule } from "@modules/user/user.module";
 import { AuthModule } from "@modules/auth/auth.module";
 import { JwtAuthGuard } from "@modules/auth/jwt/jwt-auth.guard";
 import { DriveModule } from "@modules/drive/drive.module";
+import { DriveHistoryModule } from "@modules/drive-history/drive-history.module";
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { DriveModule } from "@modules/drive/drive.module";
     UserModule,
     AuthModule,
     DriveModule,
+    DriveHistoryModule,
   ],
   controllers: [AppController],
   providers: [

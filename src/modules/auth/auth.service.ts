@@ -1,6 +1,6 @@
 import { PrismaService } from "@config/prisma/prisma.service";
 import { LoginResponse } from "@dto/login-response";
-import { JWT_SECRET } from "@environments";
+import { ACCESS_TOKEN_EXP, JWT_SECRET, REFRESH_TOKEN_EXP } from "@environments";
 import { ConflictException, Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "@prisma/client";
@@ -16,13 +16,13 @@ const common = {
   accessToken: {
     privateKey: JWT_SECRET,
     signOptions: {
-      expiresIn: "1h", // 15m
+      expiresIn: ACCESS_TOKEN_EXP, // 15m
     },
   },
   refreshToken: {
     privateKey: JWT_SECRET,
     signOptions: {
-      expiresIn: "7d", // 7d
+      expiresIn: REFRESH_TOKEN_EXP, // 7d
     },
   },
 };

@@ -70,6 +70,8 @@ const STRIPE_PLAN: string = process.env.STRIPE_PLAN || "xxx";
 
 // jwt
 const JWT_SECRET: string = process.env.JWT_SECRET || "duydeptrai";
+const ACCESS_TOKEN_EXP: string = process.env.ACCESS_TOKEN_EXP || "1h";
+const REFRESH_TOKEN_EXP: string = process.env.REFRESH_TOKEN_EXP || "7d";
 
 export {
   NODE_ENV,
@@ -108,4 +110,6 @@ export {
   STRIPE_SECRET_KEY,
   STRIPE_PLAN,
   JWT_SECRET,
+  ACCESS_TOKEN_EXP,
+  REFRESH_TOKEN_EXP,
 };
