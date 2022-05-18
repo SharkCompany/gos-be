@@ -7,7 +7,7 @@ export class UpdateUserInfoDto {
   @ApiProperty()
   licensePalate: string;
   @ApiProperty()
-  avatar: string;
+  picture: string;
 
   @ApiProperty()
   @IsPhoneNumber()

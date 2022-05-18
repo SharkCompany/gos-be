@@ -17,6 +17,7 @@ import { DriveModule } from "@modules/drive/drive.module";
 import { DriveHistoryModule } from "@modules/drive-history/drive-history.module";
 import { CloudinaryModule } from "@modules/cloudinary/cloudinary.module";
 import { ChatGateway } from "@modules/chat/chat.gateway";
+import { ChatModule } from "@modules/chat/chat.module";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ChatGateway } from "@modules/chat/chat.gateway";
     DriveModule,
     DriveHistoryModule,
     CloudinaryModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [

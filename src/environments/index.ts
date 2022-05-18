@@ -78,6 +78,8 @@ const CLOUDINARY = "Cloudinary";
 const CLOUDINARY_NAME = process.env.CLOUD_NAME;
 const CLOUDINARY_API_KEY = process.env.CLOUD_API_KEY;
 const CLOUDINARY_API_SECRET = process.env.CLOUD_API_SECRET;
+// pagination
+const PAGE_MAX_OFFSET = 20;
 
 export {
   NODE_ENV,
@@ -122,4 +124,5 @@ export {
   CLOUDINARY_NAME,
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
+  PAGE_MAX_OFFSET,
 };
