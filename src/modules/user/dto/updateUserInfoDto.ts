@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsPhoneNumber } from "class-validator";
+import { IsOptional, IsPhoneNumber } from "class-validator";
 
 export class UpdateUserInfoDto {
   @ApiProperty()
@@ -12,4 +12,7 @@ export class UpdateUserInfoDto {
   @ApiProperty()
   @IsPhoneNumber()
   phone: string;
+
+  @IsOptional()
+  picture?: string;
 }
