@@ -15,8 +15,6 @@ import {
   ApiBody,
   ApiOkResponse,
   ApiParam,
-  ApiProperty,
-  ApiResponse,
   ApiTags,
 } from "@nestjs/swagger";
 import { PaginationDto } from "@shared/pagination";
@@ -59,6 +57,7 @@ export class ChatController {
     return cv.messages;
   }
 
+  @Public()
   @ApiBearerAuth()
   @ApiBody({
     description: "conversation Id",
@@ -68,7 +67,11 @@ export class ChatController {
     type: Conversation,
   })
   @Patch("join")
-  async createConversation(@CurrentUser() curr, @Body() id: string) {
-    return this.chat.createConversation(curr.id, id);
+  async createConversation(
+    // @CurrentUser() curr,
+    @Body("id", ParseIntPipe) id: number,
+  ) {
+    // return this.chat.createConversation(curr.id, id);
+    return await this.chat.createConversation(5, 13);
   }
 }

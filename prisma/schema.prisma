@@ -76,7 +76,7 @@ model Conversation {
 // store socket id
 model Information {
   id        Int      @id @default(autoincrement())
-  userId    String
+  userId    Int
   status    Boolean  @default(false)
   value     String
   createdAt DateTime @default(now())

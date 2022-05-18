@@ -45,4 +45,8 @@ export class UserService {
       },
     });
   }
+
+  async getUserById(id: number) {
+    return this.prisma.user.findFirst({ where: { id: id } });
+  }
 }
