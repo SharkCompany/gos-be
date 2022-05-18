@@ -52,22 +52,6 @@ model DriveHistory {
   drive        Drive       @relation(fields: [driveId], references: [id])
 }
 
-model Conversation {
-  id             Int       @id @default(autoincrement())
-  participant1 Int
-  participant2   Int
-  messages       Message[]
-}
-
-model Message {
-  id             Int          @id @default(autoincrement())
-  conversationId Int
-  receiverId     Int
-  senderId       Int
-  createdAt      DateTime
-  conversation   Conversation @relation(fields: [conversationId], references: [id])
-}
-
 enum DriveStatus {
   waiting
   preparing
