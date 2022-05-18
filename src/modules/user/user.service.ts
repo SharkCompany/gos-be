@@ -34,4 +34,15 @@ export class UserService {
       },
     });
   }
+
+  updateImage(id: number, imgUrl: string) {
+    return this.prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        picture: imgUrl,
+      },
+    });
+  }
 }

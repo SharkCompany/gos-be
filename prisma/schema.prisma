@@ -8,43 +8,81 @@ datasource db {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  email         String   @unique
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
   name          String
   phone         String?
-  licensePlates String?  @unique
+  licensePlates String?        @unique
   bio           String?
   picture       String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  driver        Drive[]  @relation("driver")
-  passenger     Drive[]  @relation("passenger")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  drive         Drive[]        @relation("creator")
+  pDriveHistory DriveHistory[] @relation("passenger")
+  dDriveHistory DriveHistory[] @relation("driver")
+  message       Message[]
+  conversation  Conversation[] 
 }
 
 model Drive {
-  id           Int            @id @default(autoincrement())
-  destination  String
-  price        String?
-  available    Boolean        @default(true)
-  timeStart    DateTime
-  passengerId  Int?
-  driverId     Int
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  driver       User?          @relation("driver", fields: [driverId], references: [id])
-  passenger    User?          @relation("passenger", fields: [passengerId], references: [id])
-  driveHistory DriveHistory[]
+  id             Int            @id @default(autoincrement())
+  destination    String
+  departurePlace String
+  price          String?
+  available      Boolean        @default(true)
+  timeStart      DateTime
+  createtorId    Int
+  rating         Float
+  type           DriveType
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  creator        User?          @relation("creator", fields: [createtorId], references: [id])
+  driveHistory   DriveHistory[]
 }
 
 model DriveHistory {
-  id        Int         @id @default(autoincrement())
-  driveId   Int
-  drive     Drive       @relation(fields: [driveId], references: [id])
-  status    DriveStatus
-  timeEnd   DateTime?
-  timeStart DateTime?
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id           Int         @id @default(autoincrement())
+  driveId      Int
+  status       DriveStatus
+  cancelReason String?
+  driverId     Int?
+  passengerId  Int?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  driver       User?       @relation("driver", fields: [driverId], references: [id])
+  passenger    User?       @relation("passenger", fields: [passengerId], references: [id])
+  drive        Drive       @relation(fields: [driveId], references: [id])
+}
+
+model Message {
+  id             Int          @id @default(autoincrement())
+  sender         User         @relation(fields: [senderId], references: [id])
+  message        String
+  senderId       Int
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId Int
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Conversation {
+  id        Int       @id @default(autoincrement())
+  user      User[]
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// store socket id
+model Information {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  status    Boolean  @default(false)
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique(fields: [userId, value], name: "information")
 }
 
 enum DriveStatus {
@@ -56,3 +94,7 @@ enum DriveStatus {
   canceled
 }
 
+enum DriveType {
+  dinho
+  yensau
+}

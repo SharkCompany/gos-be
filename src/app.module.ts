@@ -15,6 +15,9 @@ import { AuthModule } from "@modules/auth/auth.module";
 import { JwtAuthGuard } from "@modules/auth/jwt/jwt-auth.guard";
 import { DriveModule } from "@modules/drive/drive.module";
 import { DriveHistoryModule } from "@modules/drive-history/drive-history.module";
+import { CloudinaryModule } from "@modules/cloudinary/cloudinary.module";
+import { ChatGateway } from "@modules/chat/chat.gateway";
+import { ChatModule } from "@modules/chat/chat.module";
 
 @Module({
   imports: [
@@ -24,11 +27,14 @@ import { DriveHistoryModule } from "@modules/drive-history/drive-history.module"
     AuthModule,
     DriveModule,
     DriveHistoryModule,
+    CloudinaryModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
     PrismaService,
+    ChatGateway,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

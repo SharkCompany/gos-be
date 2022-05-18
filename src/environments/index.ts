@@ -73,6 +73,14 @@ const JWT_SECRET: string = process.env.JWT_SECRET || "duydeptrai";
 const ACCESS_TOKEN_EXP: string = process.env.ACCESS_TOKEN_EXP || "1h";
 const REFRESH_TOKEN_EXP: string = process.env.REFRESH_TOKEN_EXP || "7d";
 
+// cloudinary
+const CLOUDINARY = "Cloudinary";
+const CLOUDINARY_NAME = process.env.CLOUD_NAME;
+const CLOUDINARY_API_KEY = process.env.CLOUD_API_KEY;
+const CLOUDINARY_API_SECRET = process.env.CLOUD_API_SECRET;
+// pagination
+const PAGE_MAX_OFFSET = 20;
+
 export {
   NODE_ENV,
   AUTHOR,
@@ -112,4 +120,9 @@ export {
   JWT_SECRET,
   ACCESS_TOKEN_EXP,
   REFRESH_TOKEN_EXP,
+  CLOUDINARY,
+  CLOUDINARY_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
+  PAGE_MAX_OFFSET,
 };
