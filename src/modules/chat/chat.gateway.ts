@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Logger, UseGuards } from "@nestjs/common";
 import {
-  ConnectedSocket,
   MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -21,7 +20,7 @@ import { MessagesInterface } from "./dto/message.interface";
 import { ChatService } from "./chat.service";
 import { MessageService } from "@modules/message/message.service";
 
-// @UseGuards(WsGuard)
+@UseGuards(WsGuard)
 @WebSocketGateway({
   cors: true,
 })
