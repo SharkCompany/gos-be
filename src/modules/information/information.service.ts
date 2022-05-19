@@ -8,7 +8,7 @@ export class InformationService {
   async create(info) {
     return this.prisma.information.create({ data: info });
   }
-  async delete(userId: string, value: string) {
+  async delete(userId: number, value: string) {
     return this.prisma.information.delete({
       where: {
         information: {
@@ -19,7 +19,7 @@ export class InformationService {
     });
   }
 
-  async findSocketId(userIds: string[]) {
+  async findSocketId(userIds: number[]) {
     return this.prisma.information.findMany({
       select: { value: true },
       where: {

@@ -1,12 +1,11 @@
 import { PrismaService } from "@config/prisma/prisma.service";
-import { CurrentUser } from "@decorator";
 import { PAGE_MAX_OFFSET } from "@environments";
-import { Param } from "@nestjs/common";
-import { Conversation, Message } from "@prisma/client";
-import { Pagination, PaginationOptions } from "@shared/pagination";
+import { Injectable } from "@nestjs/common";
+import { PaginationOptions } from "@shared/pagination";
 
+@Injectable()
 export class ChatService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
   async getConversations(userId: number) {
     const conversations = await this.prisma.user.findFirst({
@@ -23,6 +22,7 @@ export class ChatService {
     });
 
     const conversationIds = conversations.conversation.map((c) => c.id);
+
     const chatlist = await this.prisma.conversation.findMany({
       where: {
         AND: [
@@ -32,8 +32,12 @@ export class ChatService {
             },
           },
           {
-            userId: {
-              not: userId,
+            user: {
+              some: {
+                id: {
+                  not: userId,
+                },
+              },
             },
           },
         ],
@@ -73,7 +77,7 @@ export class ChatService {
   async createConversation(me: number, you: number) {
     return this.prisma.conversation.create({
       data: {
-        participants: {
+        user: {
           connect: [
             {
               id: me,
@@ -95,7 +99,7 @@ export class ChatService {
       },
       select: {
         id: true,
-        participants: {
+        user: {
           select: {
             id: true,
           },
@@ -103,7 +107,7 @@ export class ChatService {
       },
     });
 
-    const participantIds = conversation.participants.map((p) => p.id);
+    const participantIds = conversation.user.map((p) => p.id);
     return participantIds;
   }
 }

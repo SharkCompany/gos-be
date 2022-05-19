@@ -12,7 +12,4 @@ export class UpdateUserInfoDto {
   @ApiProperty()
   @IsPhoneNumber()
   phone: string;
-
-  @IsOptional()
-  picture?: string;
 }

@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Logger, UseGuards } from "@nestjs/common";
 import {
-  ConnectedSocket,
   MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -41,7 +40,7 @@ export class ChatGateway
 
   async handleDisconnect(client: any) {
     const user = await this.getDataUserFromToken(client);
-    await this.informationService.delete(client, user.id);
+    await this.informationService.delete(user.id, client);
   }
 
   afterInit(server: any): any {
@@ -66,7 +65,6 @@ export class ChatGateway
 
     const message = await this.messageService.create({
       senderId: msg.userId,
-      status: false,
       message: msg.message,
       conversationId: msg.conversationId,
     });
@@ -79,9 +77,7 @@ export class ChatGateway
         message: message.message,
         senderId: message.senderId,
         conversationId: message.conversationId,
-        status: message.status,
         createdAt: message.createdAt,
-        updatedAt: message.updatedAt,
       });
     });
   }

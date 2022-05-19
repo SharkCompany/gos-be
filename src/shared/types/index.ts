@@ -1,5 +1,4 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { PaginationDto } from "@shared/pagination";
 
 export class Message {
   @ApiProperty()
@@ -9,42 +8,46 @@ export class Message {
   @ApiProperty()
   conversationId: string | null;
   @ApiProperty()
-  status: boolean;
-  @ApiProperty()
   senderId: string;
   @ApiProperty()
   createdAt: Date;
-  @ApiProperty()
-  updatedAt: Date;
 }
 
-export class Profile {
+export class User {
   @ApiProperty()
-  id: string;
+  id: number;
+
   @ApiProperty()
-  name: string | null;
+  email: string;
+
   @ApiProperty()
-  picture: string | null;
+  name: string;
+
   @ApiProperty()
-  gender: string | null;
+  phone: string;
+
   @ApiProperty()
-  phone: string | null;
+  licensePlates: string;
+
   @ApiProperty()
-  followingIDs: string[];
-  followedByIDs: string[];
+  bio: string;
   @ApiProperty()
-  createdAt: Date;
-  @ApiProperty()
-  updatedAt: Date;
-  @ApiProperty()
-  conversationId: string | null;
+  picture: string;
+  @ApiProperty({
+    type: Date,
+  })
+  createdAt: string;
+  @ApiProperty({
+    type: Date,
+  })
+  updatedAt: string;
 }
 
 export class Conversation {
   @ApiProperty()
   id: string;
-  @ApiProperty({ type: Profile, isArray: true })
-  participants: any;
+  @ApiProperty({ type: User, isArray: true })
+  users: any;
   @ApiProperty({ type: Message, isArray: true })
   messages: any;
   @ApiProperty()
@@ -59,4 +62,9 @@ class MessageCount {
 export class ConversationMessage extends Conversation {
   @ApiProperty({ description: "_count: {message:number}" })
   _count: MessageCount;
+}
+
+export enum DriveType {
+  waiting,
+  preparing,
 }

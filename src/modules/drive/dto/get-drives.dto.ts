@@ -19,4 +19,6 @@ export class GetDrivesDto {
   @ApiProperty({ required: false, enum: DriveStatus })
   @IsOptional()
   status: DriveStatus;
+
+  creatorId: number;
 }
