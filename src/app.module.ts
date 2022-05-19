@@ -18,6 +18,7 @@ import { DriveHistoryModule } from "@modules/drive-history/drive-history.module"
 import { CloudinaryModule } from "@modules/cloudinary/cloudinary.module";
 import { ChatModule } from "@modules/chat/chat.module";
 import { InformationModule } from "@modules/information/information.module";
+import { PlacesModule } from "@modules/places/places.module";
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { InformationModule } from "@modules/information/information.module";
     CloudinaryModule,
     ChatModule,
     InformationModule,
+    PlacesModule,
   ],
   controllers: [AppController],
   providers: [

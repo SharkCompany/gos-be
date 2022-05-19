@@ -17,11 +17,10 @@ model User {
   picture       String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-  drive         Drive[]        @relation("creator")
-  pDriveHistory DriveHistory[] @relation("passenger")
-  dDriveHistory DriveHistory[] @relation("driver")
+  creatorHistory         Drive[]        @relation("creator")
+  matchHistory Drive[] @relation("matcher-history")
   message       Message[]
-  conversation  Conversation[] 
+  conversation  Conversation[]
 }
 
 model Drive {
@@ -31,13 +30,15 @@ model Drive {
   price          String?
   available      Boolean        @default(true)
   timeStart      DateTime
-  createtorId    Int
-  rating         Float
+  creatorId      Int
+  matcher        User?          @relation("matcher-history", fields: [matcherId], references: [id])
+  rating         Float?
   type           DriveType
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
-  creator        User?          @relation("creator", fields: [createtorId], references: [id])
+  creator        User?          @relation("creator", fields: [creatorId], references: [id])
   driveHistory   DriveHistory[]
+  matcherId         Int?
 }
 
 model DriveHistory {
@@ -45,12 +46,8 @@ model DriveHistory {
   driveId      Int
   status       DriveStatus
   cancelReason String?
-  driverId     Int?
-  passengerId  Int?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  driver       User?       @relation("driver", fields: [driverId], references: [id])
-  passenger    User?       @relation("passenger", fields: [passengerId], references: [id])
   drive        Drive       @relation(fields: [driveId], references: [id])
 }
 
@@ -62,7 +59,6 @@ model Message {
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   conversationId Int
   createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
 }
 
 model Conversation {
@@ -87,11 +83,7 @@ model Information {
 
 enum DriveStatus {
   waiting
-  preparing
-  onroad
-  completed
-  failed
-  canceled
+  matched
 }
 
 enum DriveType {

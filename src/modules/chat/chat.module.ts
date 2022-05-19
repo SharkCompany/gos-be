@@ -22,6 +22,6 @@ import { ChatService } from "./chat.service";
     UserModule,
   ],
   controllers: [ChatController],
-  providers: [ChatGateway, PrismaService, ChatService],
+  providers: [ChatGateway, ChatService, PrismaService],
 })
 export class ChatModule {}

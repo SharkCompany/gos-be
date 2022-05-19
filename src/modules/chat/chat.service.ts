@@ -1,12 +1,13 @@
 import { PrismaService } from "@config/prisma/prisma.service";
 import { CurrentUser } from "@decorator";
 import { PAGE_MAX_OFFSET } from "@environments";
-import { Param } from "@nestjs/common";
+import { Injectable, Param } from "@nestjs/common";
 import { Conversation, Message } from "@prisma/client";
 import { Pagination, PaginationOptions } from "@shared/pagination";
 
+@Injectable()
 export class ChatService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
   async getConversations(userId: number) {
     const conversations = await this.prisma.user.findFirst({
@@ -76,36 +77,20 @@ export class ChatService {
   }
 
   async createConversation(me: number, you: number) {
-    // return this.prisma.conversation.create({
-    //   data: {
-    //     participants: {
-    //       connect: [
-    //         {
-    //           id: me,
-    //         },
-    //         {
-    //           id: you,
-    //         },
-    //       ],
-    //     },
-    //   },
-    // });
-    // return this.prisma.conversation.create({
-    //   data: {
-    //     user: {
-    //       connect: [
-    //         {
-    //           id: me,
-    //         },
-    //         {
-    //           id: you,
-    //         },
-    //       ],
-    //     },
-    //   },
-    // });
-    const users = await this.prisma.user.findMany();
-    return users;
+    return this.prisma.conversation.create({
+      data: {
+        user: {
+          connect: [
+            {
+              id: me,
+            },
+            {
+              id: you,
+            },
+          ],
+        },
+      },
+    });
   }
 
   // get participants in provided conversation

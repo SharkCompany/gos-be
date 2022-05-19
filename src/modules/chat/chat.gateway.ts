@@ -21,7 +21,7 @@ import { MessagesInterface } from "./dto/message.interface";
 import { ChatService } from "./chat.service";
 import { MessageService } from "@modules/message/message.service";
 
-@UseGuards(WsGuard)
+// @UseGuards(WsGuard)
 @WebSocketGateway({
   cors: true,
 })

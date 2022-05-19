@@ -46,7 +46,7 @@ export class ChatController {
     type: ConversationMessage,
   })
   @ApiParam({
-    name: "somename",
+    name: "pagination options",
     type: PaginationDto,
   })
   async conversation(@Param() params: ChatListGetDto) {
@@ -57,7 +57,6 @@ export class ChatController {
     return cv.messages;
   }
 
-  @Public()
   @ApiBearerAuth()
   @ApiBody({
     description: "conversation Id",
@@ -68,10 +67,9 @@ export class ChatController {
   })
   @Patch("join")
   async createConversation(
-    // @CurrentUser() curr,
+    @CurrentUser() curr,
     @Body("id", ParseIntPipe) id: number,
   ) {
-    // return this.chat.createConversation(curr.id, id);
-    return await this.chat.createConversation(5, 13);
+    return this.chat.createConversation(curr.id, id);
   }
 }
