@@ -64,6 +64,6 @@ export class DriveController {
 
   @Get("my")
   async getMyDrive(@CurrentUser() curr) {
-    return this.drive.getDrives({ creatorId: curr.id });
+    return await this.drive.getDrives({ creatorId: curr.id });
   }
 }
