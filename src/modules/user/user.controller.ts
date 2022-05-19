@@ -49,6 +49,7 @@ export class UserController {
     return diff;
   }
 
+  @Public()
   @ApiConsumes("multipart/form-data")
   @ApiBody({
     description: "image upload",
@@ -63,6 +64,6 @@ export class UserController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     const picture = await this.upload.uploadImage(file);
-    return await this.userService.updateImage(curr.id, picture.secure_url);
+    return await this.userService.updateImage(1, picture.secure_url);
   }
 }

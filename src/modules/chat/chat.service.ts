@@ -1,9 +1,7 @@
 import { PrismaService } from "@config/prisma/prisma.service";
-import { CurrentUser } from "@decorator";
 import { PAGE_MAX_OFFSET } from "@environments";
-import { Injectable, Param } from "@nestjs/common";
-import { Conversation, Message } from "@prisma/client";
-import { Pagination, PaginationOptions } from "@shared/pagination";
+import { Injectable } from "@nestjs/common";
+import { PaginationOptions } from "@shared/pagination";
 
 @Injectable()
 export class ChatService {

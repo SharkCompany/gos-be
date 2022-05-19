@@ -78,7 +78,6 @@ export class ChatGateway
         senderId: message.senderId,
         conversationId: message.conversationId,
         createdAt: message.createdAt,
-        updatedAt: message.updatedAt,
       });
     });
   }
