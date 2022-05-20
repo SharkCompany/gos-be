@@ -5,7 +5,7 @@ export class UpdateUserInfoDto {
   @ApiProperty()
   bio: string;
   @ApiProperty()
-  licensePalate: string;
+  licensePlates?: string;
   @ApiProperty()
   picture: string;
 

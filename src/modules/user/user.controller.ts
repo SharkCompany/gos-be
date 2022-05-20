@@ -41,11 +41,12 @@ export class UserController {
     return users;
   }
 
+  @Public()
   @ApiBearerAuth()
   @ApiOkResponse({ status: HttpStatus.OK, description: "User info" })
   @Post("information")
   async updateInfo(@CurrentUser() curr, @Body() params: UpdateUserInfoDto) {
-    const diff = await this.userService.updateInfo(curr.id, params);
+    const diff = await this.userService.updateInfo(2, params);
     return diff;
   }
 
