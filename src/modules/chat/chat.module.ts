@@ -1,5 +1,6 @@
 import { PrismaService } from "@config/prisma/prisma.service";
 import { JWT_SECRET } from "@environments";
+import { AuthModule } from "@modules/auth/auth.module";
 import { InformationModule } from "@modules/information/information.module";
 import { MessageModule } from "@modules/message/message.module";
 import { UserModule } from "@modules/user/user.module";
@@ -17,6 +18,7 @@ import { ChatService } from "./chat.service";
     InformationModule,
     MessageModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [ChatController],
   providers: [ChatGateway, ChatService, PrismaService],

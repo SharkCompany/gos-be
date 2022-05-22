@@ -51,10 +51,7 @@ export class ChatController {
     type: PaginationDto,
   })
   async conversation(@Param() params: ChatListGetDto) {
-    const cv = await this.chat.getMessages(params.id, {
-      page: params.page,
-      limit: params.limit,
-    });
+    const cv = await this.chat.getMessages(params.id);
     return cv.messages;
   }
 

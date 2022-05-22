@@ -55,13 +55,12 @@ export class ChatService {
    * @param option pagination option
    * @returns conversation with lasted 20 message
    */
-  async getMessages(id: number, option: PaginationOptions) {
+  async getMessages(id: number) {
     const results = await this.prisma.conversation.findFirst({
       where: { id },
       include: {
         messages: {
-          take: option.limit,
-          skip: option.page * PAGE_MAX_OFFSET,
+          take: 50,
           orderBy: {
             createdAt: "desc",
           },
