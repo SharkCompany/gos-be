@@ -14,9 +14,12 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiParam,
+  ApiProperty,
   ApiQuery,
   ApiTags,
 } from "@nestjs/swagger";
+import { Transform } from "class-transformer";
+import { IsNumber } from "class-validator";
 import { DriveService } from "./drive.service";
 import { CreateDriveDto } from "./dto/create-drive.dto";
 import { GetDrivesDto } from "./dto/get-drives.dto";
@@ -31,6 +34,15 @@ export class DriveController {
   @Get()
   async getDrives(@Query() query: GetDrivesDto) {
     return await this.drive.getDrives(query);
+  }
+
+  @ApiBearerAuth()
+  @ApiParam({
+    name: "id",
+  })
+  @Get(":id")
+  async findById(@Param("id", ParseIntPipe) id: number) {
+    return await this.drive.findWithId(id);
   }
 
   @ApiBearerAuth()

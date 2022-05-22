@@ -11,9 +11,16 @@ import { GetDrivesDto } from "./dto/get-drives.dto";
 @Injectable()
 export class DriveService {
   constructor(private readonly prisma: PrismaService) {}
-  getDrives(query: GetDrivesDto) {
+  async getDrives(query: GetDrivesDto) {
     return this.prisma.drive.findMany({
       where: { ...query },
+      include: {
+        creator: true,
+        matcher: true,
+        destination: true,
+        driveHistory: true,
+        departure: true,
+      },
     });
   }
 
@@ -55,6 +62,18 @@ export class DriveService {
     return this.prisma.drive.delete({ where: { id } });
   }
 
+  async findWithId(id: number) {
+    return this.prisma.drive.findFirst({
+      where: { id },
+      include: {
+        creator: true,
+        matcher: true,
+        destination: true,
+        departure: true,
+      },
+    });
+  }
+
   /**
    * change drive availability then commit to drive history
    * @param id drive id
@@ -66,7 +85,7 @@ export class DriveService {
         id: driveId,
       },
     });
-    if (drive.available)
+    if (!drive.available)
       throw new HttpException("drive already matched", HttpStatus.FORBIDDEN);
 
     await this.prisma.drive.update({

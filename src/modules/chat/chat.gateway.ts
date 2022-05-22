@@ -19,6 +19,7 @@ import { WsGuard } from "./guards/validation";
 import { MessagesInterface } from "./dto/message.interface";
 import { ChatService } from "./chat.service";
 import { MessageService } from "@modules/message/message.service";
+import { JWT_SECRET } from "@environments";
 
 @UseGuards(WsGuard)
 @WebSocketGateway({
@@ -47,15 +48,20 @@ export class ChatGateway
     this.logger.log(server, "Init");
   }
 
-  async handleConnection(@CurrentUser() curr, client: Socket) {
+  async handleConnection(client: Socket) {
+    // console.log(client);
+    // const id = this.getCurrentUser())
+    const user = await this.getDataUserFromToken(client);
+    console.log("user", user);
     this.logger.log(client.id, "Connected..............................");
 
-    const information: InformationCreateDto = {
-      userId: curr.id,
-      status: false,
-      value: client.id,
-    };
-    await this.informationService.create(information);
+    // console.log(curr);
+    // const information: InformationCreateDto = {
+    //   userId: curr.id,
+    //   status: false,
+    //   value: client.id,
+    // };
+    // await this.informationService.create(information);
   }
 
   @SubscribeMessage("private_message")
@@ -83,13 +89,22 @@ export class ChatGateway
   }
 
   async getDataUserFromToken(client: Socket): Promise<User> {
-    const authToken: any = client.handshake?.query?.token;
+    // const authToken: any = client.handshake?.query?.token;
+    const id = client.handshake?.query?.id.toString();
+    console.log("id", client.handshake.query, id);
     try {
-      const decoded = this.jwtService.verify(authToken);
-
-      return await this.userService.getUserById(decoded.id); // response to function
+      // const decoded = await this.jwtService.verifyAsync(authToken, {
+      //   secret: JWT_SECRET,
+      // });
+      // console.log("decoded", decoded);
+      return await this.userService.getUserById(2); // response to function
     } catch (ex) {
+      console.log(ex);
       throw new HttpException("Not found", HttpStatus.NOT_FOUND);
     }
   }
+}
+
+function parseInt(str: string | string[]): number {
+  if (typeof str === "string") return Number.parseInt(str);
 }

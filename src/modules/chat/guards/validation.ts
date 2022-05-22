@@ -28,6 +28,8 @@ export class WsGuard implements CanActivate {
       return true;
     }
 
+    console.log("auth", authToken);
+
     try {
       const decoded = this.jwtService.verify(authToken);
       const user = await this.userService.getUserById(decoded.id); // response to function
