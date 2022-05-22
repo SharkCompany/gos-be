@@ -52,4 +52,10 @@ export class AuthController {
   async refreshToken(@CurrentUser() user: User) {
     return await this.auth.tradeToken(user);
   }
+
+  @Public()
+  @Get("gentoken")
+  async gentoken() {
+    return await this.auth.tradeToken({ id: 3 });
+  }
 }

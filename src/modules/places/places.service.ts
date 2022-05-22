@@ -1,15 +1,25 @@
+import { PrismaService } from "@config/prisma/prisma.service";
 import { Injectable } from "@nestjs/common";
-import { places } from "./places.data";
+import { Place } from "@prisma/client";
+import { CreatePlaceDto } from "./dto/create-place.dto";
 
 @Injectable()
 export class PlacesService {
-  findAll() {
-    return places;
+  constructor(private readonly prisma: PrismaService) {}
+  async findAll() {
+    return this.prisma.place.findMany();
   }
   getRecomend() {
     return this.findAll();
   }
   findById(id: number) {
-    return places.find((p) => p.id === id);
+    return this.prisma.place.findUnique({
+      where: { id },
+    });
+  }
+  async create(place: CreatePlaceDto) {
+    return this.prisma.place.create({
+      data: { ...place },
+    });
   }
 }

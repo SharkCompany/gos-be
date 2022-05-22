@@ -5,7 +5,7 @@ import { IsOptional, Max, Min } from "class-validator";
 
 export class CreateDriveDto {
   @ApiProperty()
-  destination: string;
+  destinationId: number;
 
   @ApiProperty()
   @IsOptional()
@@ -21,7 +21,7 @@ export class CreateDriveDto {
   timeStart: string;
 
   @ApiProperty()
-  departurePlace: string;
+  departureId: number;
 
   @ApiProperty({
     enum: DriveType,

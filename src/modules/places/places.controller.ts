@@ -1,6 +1,16 @@
 import { Public } from "@decorator";
-import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from "@nestjs/common";
+import { ApiBearerAuth, ApiBody, ApiTags } from "@nestjs/swagger";
+import { Place } from "@prisma/client";
+import { CreatePlaceDto } from "./dto/create-place.dto";
+import { places } from "./places.data";
 import { PlacesService } from "./places.service";
 
 @ApiTags("places")
@@ -10,8 +20,8 @@ export class PlacesController {
 
   @Public()
   @Get()
-  findAll() {
-    return this.place.findAll();
+  async findAll() {
+    return await this.place.findAll();
   }
 
   @Public()
@@ -24,5 +34,11 @@ export class PlacesController {
   @Get(":id")
   find(@Param("id", ParseIntPipe) id: number) {
     return this.place.findById(id);
+  }
+
+  @Public()
+  @Post("create")
+  async create(@Body() data: CreatePlaceDto) {
+    return await this.place.create(data);
   }
 }

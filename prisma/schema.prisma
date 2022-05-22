@@ -24,23 +24,23 @@ model User {
 }
 
 model Drive {
-  id             Int            @id @default(autoincrement())
-  destination    String
-  departurePlace String
-  price          String?
-  available      Boolean        @default(true)
-  timeStart      DateTime
-  creatorId      Int
-  matcher        User?          @relation("matcher-history", fields: [matcherId], references: [id])
-  rating         Float?
-  type           DriveType
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  creator        User?          @relation("creator", fields: [creatorId], references: [id])
-  driveHistory   DriveHistory[]
-  matcherId      Int?
-  place          Place          @relation(fields: [placeId], references: [id])
-  placeId        Int
+  id            Int            @id @default(autoincrement())
+  destination   Place          @relation("destinationPlace", fields: [destinationId], references: [id])
+  departure     Place          @relation("departPlace", fields: [departureId], references: [id])
+  price         String?
+  available     Boolean        @default(true)
+  timeStart     DateTime
+  creatorId     Int
+  matcher       User?          @relation("matcher-history", fields: [matcherId], references: [id])
+  rating        Float?
+  type          DriveType
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  creator       User?          @relation("creator", fields: [creatorId], references: [id])
+  driveHistory  DriveHistory[]
+  matcherId     Int?
+  destinationId Int            
+  departureId   Int            
 }
 
 model DriveHistory {
@@ -84,12 +84,13 @@ model Information {
 }
 
 model Place {
-  id        Int     @id @default(autoincrement())
-  title     String
-  address   String
-  latitude  String
-  longitude String
-  Drive     Drive[]
+  id         Int    @id @default(autoincrement())
+  title      String
+  address    String
+  latitude   String
+  longitude  String
+  desination Drive? @relation("destinationPlace")
+  departure  Drive? @relation("departPlace")
 }
 
 enum DriveStatus {

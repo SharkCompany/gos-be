@@ -11,21 +11,31 @@ import { GetDrivesDto } from "./dto/get-drives.dto";
 @Injectable()
 export class DriveService {
   constructor(private readonly prisma: PrismaService) {}
-  getDrives(query: Partial<GetDrivesDto>) {
+  getDrives(query: GetDrivesDto) {
+    console.log("getting drive: ", query);
     return this.prisma.drive.findMany({
-      where: {
-        ...query,
-      },
+      where: { ...query },
     });
   }
 
   async create(creatorId: number, data: CreateDriveDto) {
     const drive = await this.prisma.drive.create({
       data: {
-        ...data,
+        timeStart: data.timeStart,
+        type: data.type,
         creator: {
           connect: {
             id: creatorId,
+          },
+        },
+        departure: {
+          connect: {
+            id: data.departureId,
+          },
+        },
+        destination: {
+          connect: {
+            id: data.destinationId,
           },
         },
         driveHistory: {
