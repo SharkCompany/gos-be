@@ -70,7 +70,7 @@ const STRIPE_PLAN: string = process.env.STRIPE_PLAN || "xxx";
 
 // jwt
 const JWT_SECRET: string = process.env.JWT_SECRET || "duydeptrai";
-const ACCESS_TOKEN_EXP: string = process.env.ACCESS_TOKEN_EXP || "1h";
+const ACCESS_TOKEN_EXP: string = process.env.ACCESS_TOKEN_EXP || "30d";
 const REFRESH_TOKEN_EXP: string = process.env.REFRESH_TOKEN_EXP || "7d";
 
 // cloudinary

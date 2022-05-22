@@ -41,16 +41,14 @@ export class UserController {
     return users;
   }
 
-  @Public()
   @ApiBearerAuth()
   @ApiOkResponse({ status: HttpStatus.OK, description: "User info" })
   @Post("information")
   async updateInfo(@CurrentUser() curr, @Body() params: UpdateUserInfoDto) {
-    const diff = await this.userService.updateInfo(2, params);
+    const diff = await this.userService.updateInfo(curr.id, params);
     return diff;
   }
 
-  @Public()
   @ApiConsumes("multipart/form-data")
   @ApiBody({
     description: "image upload",
@@ -58,13 +56,12 @@ export class UserController {
   })
   @ApiBearerAuth()
   @Post("add-image")
-  @Public()
   @UseInterceptors(FileInterceptor("file"))
   async uploadImage(
     @CurrentUser() curr,
     @UploadedFile() file: Express.Multer.File,
   ) {
     const picture = await this.upload.uploadImage(file);
-    return await this.userService.updateImage(1, picture.secure_url);
+    return await this.userService.updateImage(curr.id, picture.secure_url);
   }
 }

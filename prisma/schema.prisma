@@ -8,37 +8,39 @@ datasource db {
 }
 
 model User {
-  id            Int            @id @default(autoincrement())
-  email         String         @unique
-  name          String
-  phone         String?
-  licensePlates String?        @unique
-  bio           String?
-  picture       String?
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  creatorHistory         Drive[]        @relation("creator")
-  matchHistory Drive[] @relation("matcher-history")
-  message       Message[]
-  conversation  Conversation[]
+  id             Int            @id @default(autoincrement())
+  email          String         @unique
+  name           String
+  phone          String?
+  licensePlates  String?        @unique
+  bio            String?
+  picture        String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  creatorHistory Drive[]        @relation("creator")
+  matchHistory   Drive[]        @relation("matcher-history")
+  message        Message[]
+  conversation   Conversation[]
 }
 
 model Drive {
-  id             Int            @id @default(autoincrement())
-  destination    String
-  departurePlace String
-  price          String?
-  available      Boolean        @default(true)
-  timeStart      DateTime
-  creatorId      Int
-  matcher        User?          @relation("matcher-history", fields: [matcherId], references: [id])
-  rating         Float?
-  type           DriveType
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  creator        User?          @relation("creator", fields: [creatorId], references: [id])
-  driveHistory   DriveHistory[]
-  matcherId         Int?
+  id            Int            @id @default(autoincrement())
+  destination   Place          @relation("destinationPlace", fields: [destinationId], references: [id])
+  departure     Place          @relation("departPlace", fields: [departureId], references: [id])
+  price         String?
+  available     Boolean        @default(true)
+  timeStart     DateTime
+  creatorId     Int
+  matcher       User?          @relation("matcher-history", fields: [matcherId], references: [id])
+  rating        Float?
+  type          DriveType
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  creator       User?          @relation("creator", fields: [creatorId], references: [id])
+  driveHistory  DriveHistory[]
+  matcherId     Int?
+  destinationId Int            
+  departureId   Int            
 }
 
 model DriveHistory {
@@ -79,6 +81,16 @@ model Information {
   updatedAt DateTime @updatedAt
 
   @@unique(fields: [userId, value], name: "information")
+}
+
+model Place {
+  id         Int    @id @default(autoincrement())
+  title      String
+  address    String
+  latitude   String
+  longitude  String
+  desination Drive[] @relation("destinationPlace")
+  departure  Drive[] @relation("departPlace")
 }
 
 enum DriveStatus {
