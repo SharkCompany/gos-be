@@ -8,19 +8,19 @@ datasource db {
 }
 
 model User {
-  id            Int            @id @default(autoincrement())
-  email         String         @unique
-  name          String
-  phone         String?
-  licensePlates String?        @unique
-  bio           String?
-  picture       String?
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  creatorHistory         Drive[]        @relation("creator")
-  matchHistory Drive[] @relation("matcher-history")
-  message       Message[]
-  conversation  Conversation[]
+  id             Int            @id @default(autoincrement())
+  email          String         @unique
+  name           String
+  phone          String?
+  licensePlates  String?        @unique
+  bio            String?
+  picture        String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  creatorHistory Drive[]        @relation("creator")
+  matchHistory   Drive[]        @relation("matcher-history")
+  message        Message[]
+  conversation   Conversation[]
 }
 
 model Drive {
@@ -38,7 +38,9 @@ model Drive {
   updatedAt      DateTime       @updatedAt
   creator        User?          @relation("creator", fields: [creatorId], references: [id])
   driveHistory   DriveHistory[]
-  matcherId         Int?
+  matcherId      Int?
+  place          Place          @relation(fields: [placeId], references: [id])
+  placeId        Int
 }
 
 model DriveHistory {
@@ -79,6 +81,15 @@ model Information {
   updatedAt DateTime @updatedAt
 
   @@unique(fields: [userId, value], name: "information")
+}
+
+model Place {
+  id        Int     @id @default(autoincrement())
+  title     String
+  address   String
+  latitude  String
+  longitude String
+  Drive     Drive[]
 }
 
 enum DriveStatus {
