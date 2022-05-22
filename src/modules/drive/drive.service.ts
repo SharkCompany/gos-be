@@ -12,7 +12,6 @@ import { GetDrivesDto } from "./dto/get-drives.dto";
 export class DriveService {
   constructor(private readonly prisma: PrismaService) {}
   getDrives(query: GetDrivesDto) {
-    console.log("getting drive: ", query);
     return this.prisma.drive.findMany({
       where: { ...query },
     });

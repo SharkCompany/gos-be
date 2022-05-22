@@ -89,8 +89,8 @@ model Place {
   address    String
   latitude   String
   longitude  String
-  desination Drive? @relation("destinationPlace")
-  departure  Drive? @relation("departPlace")
+  desination Drive[] @relation("destinationPlace")
+  departure  Drive[] @relation("departPlace")
 }
 
 enum DriveStatus {

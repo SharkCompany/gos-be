@@ -8,6 +8,7 @@ import {
   Param,
   ParseIntPipe,
   Patch,
+  Post,
   Query,
 } from "@nestjs/common";
 import {
@@ -65,7 +66,7 @@ export class ChatController {
   @ApiOkResponse({
     type: Conversation,
   })
-  @Patch("join")
+  @Post("join")
   async createConversation(
     @CurrentUser() curr,
     @Body("id", ParseIntPipe) id: number,

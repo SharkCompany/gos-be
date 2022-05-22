@@ -30,7 +30,6 @@ export class DriveController {
   @ApiBearerAuth()
   @Get()
   async getDrives(@Query() query: GetDrivesDto) {
-    console.log(query);
     return await this.drive.getDrives(query);
   }
 

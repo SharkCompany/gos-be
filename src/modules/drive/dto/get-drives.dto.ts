@@ -1,21 +1,19 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { DriveStatus, DriveType } from "@prisma/client";
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import {
   IsBoolean,
-  IsBooleanString,
   IsDateString,
   IsEnum,
   IsNumber,
-  IsNumberString,
   IsOptional,
 } from "class-validator";
 
 export class GetDrivesDto {
   @ApiProperty({ required: false })
   @IsBoolean()
+  @Transform(({ value }) => value === "true")
   @IsOptional()
-  @Type(() => Boolean)
   available?: boolean;
 
   @ApiProperty({ required: false })
