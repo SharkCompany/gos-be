@@ -20,6 +20,8 @@ import { MessagesInterface } from "./dto/message.interface";
 import { ChatService } from "./chat.service";
 import { MessageService } from "@modules/message/message.service";
 import { JWT_SECRET } from "@environments";
+import Cache from "./cache";
+import { ConversationService } from "@modules/conversation/conversation.service";
 
 @UseGuards(WsGuard)
 @WebSocketGateway({
@@ -29,19 +31,19 @@ export class ChatGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
   @WebSocketServer() server: Server;
-  private readonly logger: Logger = new Logger("MessageGateway");
+  private readonly logger: Logger = new Logger(ChatGateway.name);
 
   constructor(
-    private readonly informationService: InformationService,
     private readonly jwtService: JwtService,
-    private readonly userService: UserService,
-    private readonly chatService: ChatService,
+    private readonly convService: ConversationService,
     private readonly messageService: MessageService,
+    private readonly cacheService: Cache,
   ) {}
 
   async handleDisconnect(client: any) {
-    const user = await this.getDataUserFromToken(client);
-    await this.informationService.delete(user.id, client);
+    const userId = this.getUserIdFromToken(client);
+    this.cacheService.delete(userId);
+    console.log(client.id, "Disconnected .................");
   }
 
   afterInit(server: any): any {
@@ -49,25 +51,19 @@ export class ChatGateway
   }
 
   async handleConnection(client: Socket) {
-    // console.log(client);
-    // const id = this.getCurrentUser())
-    const user = await this.getDataUserFromToken(client);
-    console.log("user", user);
+    const id = this.getUserIdFromToken(client);
+    this.cacheService.save(id, client.id);
     this.logger.log(client.id, "Connected..............................");
-
-    // console.log(curr);
-    // const information: InformationCreateDto = {
-    //   userId: curr.id,
-    //   status: false,
-    //   value: client.id,
-    // };
-    // await this.informationService.create(information);
   }
 
   @SubscribeMessage("private_message")
   async handleMessage(@MessageBody() msg: MessagesInterface) {
-    const userIds = await this.chatService.getParticipants(msg.conversationId);
-    const socketIds = await this.informationService.findSocketId(userIds);
+    const conversation = await this.convService.getConversationDetail(
+      msg.conversationId,
+    );
+
+    const participantIds = conversation.user.map((u) => u.id);
+    const userSocketIds = this.cacheService.getValue(participantIds);
 
     const message = await this.messageService.create({
       senderId: msg.userId,
@@ -77,8 +73,8 @@ export class ChatGateway
 
     const emit = this.server;
 
-    socketIds.map(({ value: receiverSocketId }) => {
-      emit.to(receiverSocketId).emit("message-received", {
+    userSocketIds.map((id) => {
+      emit.to(id).emit("message-received", {
         id: message.id,
         message: message.message,
         senderId: message.senderId,
@@ -88,23 +84,13 @@ export class ChatGateway
     });
   }
 
-  async getDataUserFromToken(client: Socket): Promise<User> {
+  getUserIdFromToken(client: Socket): number {
     // const authToken: any = client.handshake?.query?.token;
-    const id = client.handshake?.query?.id.toString();
-    console.log("id", client.handshake.query, id);
-    try {
-      // const decoded = await this.jwtService.verifyAsync(authToken, {
-      //   secret: JWT_SECRET,
-      // });
-      // console.log("decoded", decoded);
-      return await this.userService.getUserById(2); // response to function
-    } catch (ex) {
-      console.log(ex);
-      throw new HttpException("Not found", HttpStatus.NOT_FOUND);
-    }
-  }
-}
+    const token: any = client.handshake?.query?.token;
+    console.log("id", client.handshake.query, token);
 
-function parseInt(str: string | string[]): number {
-  if (typeof str === "string") return Number.parseInt(str);
+    const decoded: any = this.jwtService.decode(token);
+    if (decoded) throw new HttpException("Invalid token", HttpStatus.NOT_FOUND);
+    return decoded;
+  }
 }

@@ -19,6 +19,7 @@ import { CloudinaryModule } from "@modules/cloudinary/cloudinary.module";
 import { ChatModule } from "@modules/chat/chat.module";
 import { InformationModule } from "@modules/information/information.module";
 import { PlacesModule } from "@modules/places/places.module";
+import { ConversationModule } from "@modules/conversation/conversation.module";
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { PlacesModule } from "@modules/places/places.module";
     ChatModule,
     InformationModule,
     PlacesModule,
+    ConversationModule,
   ],
   controllers: [AppController],
   providers: [

@@ -39,7 +39,10 @@ export class AuthController {
       const tokens = await this.auth.tradeToken(newUser);
       return { tokens, info: newUser };
     }
-    return { tokens: await this.auth.tradeToken(user), info: user };
+    const tokens = await this.auth.tradeToken(user);
+
+    console.log(tokens);
+    return { tokens, info: user };
   }
 
   @ApiOkResponse({

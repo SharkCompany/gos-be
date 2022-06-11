@@ -1,4 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { MessageType } from "@prisma/client";
+import { IsOptional } from "class-validator";
 
 export class MessageCreateDto {
   @ApiProperty()
@@ -7,4 +9,11 @@ export class MessageCreateDto {
   conversationId: number;
   @ApiProperty()
   message: string;
+
+  @ApiProperty({
+    default: MessageType.regular,
+    type: MessageType,
+  })
+  @IsOptional()
+  type?: MessageType;
 }

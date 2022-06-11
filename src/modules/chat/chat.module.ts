@@ -1,12 +1,13 @@
 import { PrismaService } from "@config/prisma/prisma.service";
 import { JWT_SECRET } from "@environments";
 import { AuthModule } from "@modules/auth/auth.module";
-import { InformationModule } from "@modules/information/information.module";
+import { ConversationModule } from "@modules/conversation/conversation.module";
 import { MessageModule } from "@modules/message/message.module";
 import { UserModule } from "@modules/user/user.module";
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
-import { ChatController } from "./chat.controller";
+import Cache from "./cache";
+
 import { ChatGateway } from "./chat.gateway";
 import { ChatService } from "./chat.service";
 
@@ -15,12 +16,12 @@ import { ChatService } from "./chat.service";
     JwtModule.register({
       secret: JWT_SECRET,
     }),
-    InformationModule,
+    ConversationModule,
     MessageModule,
     UserModule,
     AuthModule,
   ],
-  controllers: [ChatController],
-  providers: [ChatGateway, ChatService, PrismaService],
+  // controllers: [ChatController],
+  providers: [ChatGateway, ChatService, PrismaService, Cache],
 })
 export class ChatModule {}

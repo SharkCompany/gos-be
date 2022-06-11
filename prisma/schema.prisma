@@ -39,8 +39,8 @@ model Drive {
   creator       User?          @relation("creator", fields: [creatorId], references: [id])
   driveHistory  DriveHistory[]
   matcherId     Int?
-  destinationId Int            
-  departureId   Int            
+  destinationId Int
+  departureId   Int
 }
 
 model DriveHistory {
@@ -57,6 +57,7 @@ model Message {
   id             Int          @id @default(autoincrement())
   sender         User         @relation(fields: [senderId], references: [id])
   message        String
+  type           MessageType  @default(regular)
   senderId       Int
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   conversationId Int
@@ -84,7 +85,7 @@ model Information {
 }
 
 model Place {
-  id         Int    @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   title      String
   address    String
   latitude   String
@@ -101,4 +102,9 @@ enum DriveStatus {
 enum DriveType {
   dinho
   yensau
+}
+
+enum MessageType {
+  system
+  regular
 }

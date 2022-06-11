@@ -21,6 +21,7 @@ export class PlacesController {
   @Public()
   @Get()
   async findAll() {
+    console.log("geting place ");
     return await this.place.findAll();
   }
 

@@ -4,6 +4,6 @@ import { DriveHistoryController } from "./drive-history.controller";
 
 @Module({
   providers: [DriveHistoryService],
-  controllers: [DriveHistoryController],
+  // controllers: [DriveHistoryController],
 })
 export class DriveHistoryModule {}
