@@ -23,9 +23,11 @@ import { JWT_SECRET } from "@environments";
 import Cache from "./cache";
 import { ConversationService } from "@modules/conversation/conversation.service";
 
-@UseGuards(WsGuard)
 @WebSocketGateway({
-  cors: true,
+  cors: {
+    origin: ["http://localhost:3001", "*"],
+    credentials: true,
+  },
 })
 export class ChatGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
@@ -70,10 +72,12 @@ export class ChatGateway
       message: msg.message,
       conversationId: msg.conversationId,
     });
+    this.logger.log("message created", message);
 
     const emit = this.server;
 
     userSocketIds.map((id) => {
+      console.log("message sent!", id);
       emit.to(id).emit("message-received", {
         id: message.id,
         message: message.message,
@@ -85,12 +89,10 @@ export class ChatGateway
   }
 
   getUserIdFromToken(client: Socket): number {
-    // const authToken: any = client.handshake?.query?.token;
-    const token: any = client.handshake?.query?.token;
-    console.log("id", client.handshake.query, token);
-
+    const token: any = client.handshake?.auth?.token;
     const decoded: any = this.jwtService.decode(token);
-    if (decoded) throw new HttpException("Invalid token", HttpStatus.NOT_FOUND);
-    return decoded;
+    if (!decoded)
+      throw new HttpException("Invalid token", HttpStatus.NOT_FOUND);
+    return decoded.id;
   }
 }

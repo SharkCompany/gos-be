@@ -27,7 +27,7 @@ model Drive {
   id            Int            @id @default(autoincrement())
   destination   Place          @relation("destinationPlace", fields: [destinationId], references: [id])
   departure     Place          @relation("departPlace", fields: [departureId], references: [id])
-  price         String?
+  price         Int?
   available     Boolean        @default(true)
   timeStart     DateTime
   creatorId     Int
@@ -57,7 +57,7 @@ model Message {
   id             Int          @id @default(autoincrement())
   sender         User         @relation(fields: [senderId], references: [id])
   message        String
-  type           MessageType  @default(regular)
+  type           MessageType?  @default(regular)
   senderId       Int
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   conversationId Int

@@ -20,6 +20,9 @@ export class ConversationService {
           },
         },
       },
+      include: {
+        user: true,
+      },
     });
   }
 
@@ -45,7 +48,7 @@ export class ConversationService {
     console.log("conversatoin found: ", oldConversation);
 
     if (oldConversation) {
-      this.addReturnMessage(oldConversation.id);
+      this.addReturnMessage(oldConversation.id, me);
       return oldConversation;
     } else
       return this._prisma.conversation.create({
@@ -78,11 +81,11 @@ export class ConversationService {
     return result.length > 0 ? { id: result[0].A } : undefined;
   }
 
-  async addReturnMessage(conversationId: number) {
+  async addReturnMessage(conversationId: number, senderId: number) {
     const msg: MessageCreateDto = {
       conversationId,
       type: "system",
-      senderId: -1,
+      senderId: senderId,
       message: "Connected at " + new Date().toDateString(),
     };
     this._message.create(msg);

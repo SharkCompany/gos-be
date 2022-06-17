@@ -40,6 +40,12 @@ export class PlacesController {
   @Public()
   @Post("create")
   async create(@Body() data: CreatePlaceDto) {
+    // const placef: CreatePlaceDto[] = places.map((p) => ({
+    //   title: p.title,
+    //   address: p.address,
+    //   longitude: p.geometry.longitude.toString(),
+    //   latitude: p.geometry.latitude.toString(),
+    // }));
     return await this.place.create(data);
   }
 }

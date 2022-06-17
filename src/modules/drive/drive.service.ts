@@ -29,6 +29,7 @@ export class DriveService {
       data: {
         timeStart: data.timeStart,
         type: data.type,
+        price: data.price,
         creator: {
           connect: {
             id: creatorId,

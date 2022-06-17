@@ -2,7 +2,7 @@ import { MAX_PRICE } from "@common/constants";
 import { ToBoolean } from "@decorator";
 import { ApiProperty } from "@nestjs/swagger";
 import { DriveType } from "@prisma/client";
-import { Transform } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import {
   IsBoolean,
   IsDateString,
@@ -23,6 +23,7 @@ export class CreateDriveDto {
   @ApiProperty()
   @IsNumber()
   @IsOptional()
+  @Type(() => Number)
   @Min(0)
   @Max(MAX_PRICE)
   price?: number;
