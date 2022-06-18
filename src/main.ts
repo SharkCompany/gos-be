@@ -15,7 +15,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   // app.useGlobalFilters(new HttpExceptionFilter());
-  app.enableCors({ origin: "http://localhost:3000", credentials: true });
+  app.enableCors({ origin: ["http://localhost:3000", "*"], credentials: true });
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
 
