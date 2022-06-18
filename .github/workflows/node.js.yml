@@ -25,6 +25,6 @@ jobs:
           cd ~/gos-be
           sudo docker-compose -f docker-compose.yml down
           sudo git pull origin main
-          sudo docker-compose -f docker-compose.yml up -d --build nest-api --remove-orphans 
+          sudo docker-compose -f docker-compose.yml up -d --build nest-api
 
 
